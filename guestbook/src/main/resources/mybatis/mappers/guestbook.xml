@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="guestbook">
+  <select id="getList" resultType="guestbookvo">
+    <![CDATA[
+      SELECT no, name, pwd, content, reg_date as regDate
+      FROM guestbook
+      ORDER BY no desc
+    ]]>
+  </select>
+  <select id="getOriginPwd" parameterType="Integer" resultType="string">
+    <![CDATA[
+      SELECT pwd FROM guestbook WHERE no = #{ no }
+    ]]>
+  </select>
+  <select id="getInputPwd" parameterType="string" resultType="string">
+    <![CDATA[
+      SELECT #{ pwd }
+    ]]>
+  </select>
+  <insert id="insert" parameterType="guestbookvo">
+    <![CDATA[
+      INSERT INTO guestbook
+      VALUES (null, #{ name }, #{ pwd }, #{ content }, (SELECT SYSDATE()) )
+    ]]>
+    
+    <selectKey keyProperty="no" resultType="Integer" order="AFTER">
+      SELECT last_insert_id()
+    </selectKey>
+  </insert>
+  <delete id="delete" parameterType="Integer">
+    <![CDATA[
+      DELETE FROM guestbook WHERE no = #{ no }
+    ]]>
+  </delete>
+
+
+</mapper>
