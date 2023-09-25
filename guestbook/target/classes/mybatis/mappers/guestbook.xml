@@ -37,6 +37,11 @@
       DELETE FROM guestbook WHERE no = #{ no }
     ]]>
   </delete>
+  <select id="get" parameterType="Integer" resultType="guestbookvo">
+    <![CDATA[
+      SELECT * FROM guestbook WHERE no = #{ no }
+    ]]>
+  </select>
 
 
 </mapper>

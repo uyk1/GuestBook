@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gb.exception.GuestBookException;
 import com.gb.repository.GuestBookDAO;
@@ -23,34 +24,32 @@ public class GuestBookController {
 	@Autowired
 	private GuestBookService guestBookService;
 	
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String list(Model model) {
 		List<GuestBookVO> list = guestBookService.getList();
 		model.addAttribute("list", list);
 		return "index";
 	}
 	
-	@RequestMapping(value="", method=RequestMethod.POST)
+	
+	@RequestMapping(value="/", method=RequestMethod.POST)
 	public String insert(GuestBookVO vo) {
 		guestBookService.insert(vo);
-		return "redirect:/main";
+		return "redirect:/main/";
 	}
+	
 	
 	@RequestMapping(value="/deleteform", method=RequestMethod.GET)
 	public String delete(@RequestParam Integer no, Model model) {
-		model.addAttribute("no", no);
+		model.addAttribute("no",no);
 		return "deleteform";
 	}
+	
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(GuestBookVO vo) {
 		guestBookService.delete(vo);
-		return "redirect:/main";
-	}
-	
-	@ExceptionHandler(GuestBookException.class)
-	public String handleGuestBookDAOException() {
-		return "error/error";
+		return "redirect:/main/";
 	}
 	
 //	@Autowired

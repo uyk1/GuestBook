@@ -44,7 +44,7 @@ public class GuestBookDAO {
 	private SqlSession sqlSession;
 	
 	// 방명록 게시글 리스트를 조회하는 메서드
-	public List<GuestBookVO> getList() {
+	public List<GuestBookVO> getList() throws GuestBookException{
 		List<GuestBookVO> list = sqlSession.selectList("guestbook.getList");
 		return list;
 	}
@@ -67,6 +67,12 @@ public class GuestBookDAO {
 	public boolean delete(Integer no) throws GuestBookException{
 		int count = sqlSession.delete("guestbook.delete", no);
 		return count == 1;
+	}
+
+	public GuestBookVO get(Integer no) throws GuestBookException{
+		// TODO Auto-generated method stub
+		GuestBookVO vo = sqlSession.selectOne("guestbook.get", no);
+		return vo;
 	}
 	
 //	// 게시글을 등록하는 메서드

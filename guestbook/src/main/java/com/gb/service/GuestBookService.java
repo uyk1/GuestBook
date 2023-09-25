@@ -17,8 +17,15 @@ public class GuestBookService {
 		return guestBookDAO.getList();
 	}
 	
-	public boolean insert(GuestBookVO vo) {
-		return guestBookDAO.insert(vo);
+	public GuestBookVO insert(GuestBookVO guestBookVO) {
+		GuestBookVO vo = null;
+		
+		int count = guestBookDAO.insert(guestBookVO)? 1 : 0;
+		if(count == 1) {
+			vo = guestBookDAO.get(guestBookVO.getNo());
+		}
+		
+		return vo;
 	}
 	
 	public boolean delete(GuestBookVO vo) {
