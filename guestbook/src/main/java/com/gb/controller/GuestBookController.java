@@ -31,13 +31,11 @@ public class GuestBookController {
 		return "index";
 	}
 	
-	
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	public String insert(GuestBookVO vo) {
 		guestBookService.insert(vo);
 		return "redirect:/main/";
 	}
-	
 	
 	@RequestMapping(value="/deleteform", method=RequestMethod.GET)
 	public String delete(@RequestParam Integer no, Model model) {

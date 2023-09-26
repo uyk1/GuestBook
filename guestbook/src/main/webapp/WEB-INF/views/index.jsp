@@ -60,10 +60,26 @@ pageContext.setAttribute("newLine", "\n");
 	<img alt="img"
 		src="${pageContext.servletContext.contextPath}/assets/images/1.jpeg">
 
-	<script type="text/javascript">
-  $("#add-form").submit(function(event)) {
+	<script type="text/javascript" >
+  $("#add-form").submit(function(event) {
     event.preventDefault();
+    // JSON으로 요청
+    var data = {};
+    $.each($(this).serializeArray(), function(index, o){
+    	data[o.name] = o.value
+    })
+    $.ajac({
+    	url: "ajaxtest/api/guestbook/insert",
+    	type: "POST",
+    	dataType: "json", // ajax 통신으로 받는 타입
+    	contentType: "application/json", // ajax 통신으로 보내는 타입
+    	data: JSON.stringify(data),
+    	success: function(result){
+    		// ajax 통신 성공 시 로직 수행
+    	}
+    })
     
+    /* 
     // serialize는 FORM의 <input> 요소들의 name이 배열형태로 그 값이 인코딩되어 URL query string으로 하는 메서드
     let queryString = $(this).serialize();
     
@@ -74,10 +90,10 @@ pageContext.setAttribute("newLine", "\n");
       data: queryString,
       success: function(result){
         // ajax 통신 성공 시 로직 수행
-        consol.log(data);
+        consol.log(result);
       }
-    })
-  }
+    }) */
+  })
   </script>
 
 </body>
